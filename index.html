@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="js/vue.js"></script>
+    <script defer src="js/main.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <div class="content_form">
+        <form @submit.prevent="addTask">
+            <label for="task-name">Создайте новую задачу:</label>
+
+            <input  class="input" id="task-name" type="text" v-model="taskName"><br>
+            <textarea id="task-desc" v-model="description"></textarea><br>
+            <label for="deadline">Срок сдачи:</label>
+            <input type="date" id="deadline" v-model="deadline" name="deadline-task" min="2024-01-01" max="2025-12-31" required />
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+    <div class="board">
+        <div class="column">
+            <h2 class="title_column">Запланированные задачи</h2>
+
+            <div v-for="task in planTask" :key="task.id" class="task">
+                <span>Создано: {{task.createdDate }}</span>
+                <h3>{{ task.title }}</h3>
+                <p>{{task.description}}</p>
+                <span>Срок сдачи: {{task.deadline}}</span>
+
+            </div>
+        </div>
+        <div class="column">
+            <h2 class="title_column">В работе</h2>
+        </div>
+        <div class="column">
+            <h2 class="title_column">Тестирование</h2>
+        </div>
+        <div class="column">
+            <h2 class="title_column">Выполненные задачи</h2>
+        </div>
+    </div>
+</div>
+</body>
+</html>
