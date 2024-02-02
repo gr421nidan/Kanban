@@ -33,7 +33,20 @@ new Vue({
                 this.deadline = '';
 
             }
+        },
+        removeTask(task, type){
+            this.planTask.splice(this.planTask.indexOf(task), 1)
+
+        },
+        // updateTask(task){
+        //
+        // },
+
+        moveTask(task){
+            this.planTask.splice(this.planTask.indexOf(task), 1)
+            this.workTask.push(task)
         }
+
     }
 
 });
