@@ -9,6 +9,9 @@
 
 </head>
 <body>
+<header>
+    <h2>Kanban</h2>
+</header>
 <div id="app">
 
     <div class="board">
@@ -16,30 +19,31 @@
             <h2 class="title_column">Запланированные задачи</h2>
             <div class="content_form">
                 <form @submit.prevent="addTask">
-                    <span>Создайте новую задачу:</span><br>
+                    <div class="title_form">
+                        <h4>Создание новой задачи</h4>
+                    </div>
                     <label for="task-name">Название задачи:</label>
-                    <input  class="input" id="task-name" type="text" v-model="taskName"><br>
+                    <input id="task-name" type="text" v-model="taskName" required>
                     <label for="task-desc">Описание задачи:</label>
-                    <textarea id="task-desc" v-model="description"></textarea><br>
+                    <textarea id="task-desc" v-model="description" required></textarea>
                     <label for="deadline">Срок сдачи:</label>
                     <input type="date" id="deadline" v-model="deadline" name="deadline-task" min="2024-01-01" max="2025-12-31" required />
-                    <button type="submit">Создать</button>
+                    <button class='form_button' type="submit">Создать</button>
                 </form>
             </div>
-
-
-
                 <div v-for="task in planTask" :key="task.id" class="task">
-                    <span>Создано: {{task.createdDate }}</span><br>
-                    <span>Срок сдачи: {{task.deadline}}</span><br>
+                    <span>Создано: {{task.createdDate }}</span>
+                    <span>Срок сдачи: {{task.deadline}}</span>
                     <div class="title-desc">
                         <h3>{{ task.title }}</h3>
                         <span>{{task.description}}</span>
                     </div>
+                    <div class="buttons">
+                        <button v-on:click="removeTask(task)" class="btn">Удалить</button>
+                        <button  v-on:click="editedTasks(task)">Редактировать</button>
+                        <button class="arrow_button"  v-on:click="moveFromPlanTask(task)"><i class="arrow right"></i></button>
+                    </div>
 
-                    <button v-on:click="removeTask(task)" class="btn">Удалить</button>
-                    <button  v-on:click="editedTasks(task)">Редактировать</button>
-                    <button  v-on:click="moveFromPlanTask(task)"><i class="arrow right"></i></button>
                 </div>
             <div class="modal" v-if="editedTaskModal">
                 <h3>Редактирование задачи</h3>
@@ -53,44 +57,49 @@
         <div class="column">
             <h2 class="title_column">В работе</h2>
             <div v-for="task in workTask" :key="task.id" class="task">
-                <span>Создано: {{task.createdDate }}</span><br>
-                <span>Срок сдачи: {{task.deadline}}</span><br>
+                <span>Создано: {{task.createdDate }}</span>
+                <span>Срок сдачи: {{task.deadline}}</span>
                 <div class="title-desc">
                     <h3>{{ task.title }}</h3>
                     <span>{{task.description}}</span>
                 </div>
-                <dib v-if="task.reason!==''">
+                <div v-if="task.reason!==''">
                     <span>Причина возврата:</span>
                     {{task.reason}}
-                </dib><br>
+                </div>
 
+                <div class="buttons">
+                    <button  v-on:click="editedTasks(task)">Редактировать</button>
+                    <button class="arrow_button" v-on:click="moveFromWorkTask(task)"><i class="arrow right"></i></button>
+                </div>
 
-                <button  v-on:click="updateTask(task)">Редактировать</button>
-                <button  v-on:click="moveFromWorkTask(task)"><i class="arrow right"></i></button>
 
             </div>
         </div>
         <div class="column">
             <h2 class="title_column">Тестирование</h2>
             <div v-for="task in testingTask" :key="task.id" class="task">
-                <span>Создано: {{task.createdDate }}</span><br>
-                <span>Срок сдачи: {{task.deadline}}</span><br>
+                <span>Создано: {{task.createdDate }}</span>
+                <span>Срок сдачи: {{task.deadline}}</span>
                 <div class="title-desc">
                     <h3>{{ task.title }}</h3>
                     <span>{{task.description}}</span>
                 </div>
-                <button  v-on:click="updateTask(task)">Редактировать</button>
-                <button v-on:click="moveFromTestingTaskBack(task)" :disabled="task.reason === ''" ><i class="arrow left"></i></button>
-                <button v-on:click="moveFromTestingTask(task)"><i class="arrow right"></i></button><br>
-                <label >Укажите причину, если хотите вернуть задачу назад:</label>
-                <input  type="text" v-model="task.reason"/><br><br>
+                <div class="buttons">
+                    <button v-on:click="editedTasks(task)">Редактировать</button>
+                    <button class="arrow_button" v-on:click="moveFromTestingTaskBack(task)" :disabled="task.reason === ''" ><i class="arrow left"></i></button>
+                    <button class="arrow_button" v-on:click="moveFromTestingTask(task)"><i class="arrow right"></i></button><br>
+                </div>
+
+                <label for="reason">Укажите причину, если хотите вернуть задачу назад:</label>
+                <input id="reason" type="text" v-model="task.reason"/>
             </div>
         </div>
         <div class="column">
             <h2 class="title_column">Выполненные задачи</h2>
             <div v-for="task in completedTask" :key="task.id" class="task">
-                <span>Создано: {{task.createdDate }}</span><br>
-                <span>Срок сдачи: {{task.deadline}}</span><br>
+                <span>Создано: {{task.createdDate }}</span>
+                <span>Срок сдачи: {{task.deadline}}</span>
                 <div class="title-desc">
                     <h3>{{ task.title }}</h3>
                     <span>{{task.description}}</span>

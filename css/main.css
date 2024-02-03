@@ -1,36 +1,130 @@
+*{
+    margin: 0 ;
+    padding: 0;
+    outline: none;
+
+
+}
+body{
+    background-color: #f3f2f2;
+}
 .board {
     display: flex;
+
+
+}
+.title_column{
+    background: #96a8de;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    color: white;
+
 }
 .column {
     flex: 1;
     margin: 10px;
-    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     border: 1px solid #ccc;
+
+}
+header{
+    justify-content: center;
+    text-align: center;
+    height: 40px;
+    background: #96a8de;
+    color: white;
+
 }
 .task {
-    background-color: #f2f2f2;
-    margin: 5px 0;
+    background-color: rgba(150, 168, 222, 0.2);
+    margin: 10px 10px;
     padding: 5px;
-    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid #96a8de;
+    color: #6b6b6b;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+
 }
 
 .right {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
+    cursor: pointer;
 }
 
 i {
-    border: solid black;
+    border: solid #96a8de;
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
+    cursor: pointer;
+
 }
 
 .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+    cursor: pointer;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    color: #96a8de;
+    font-size: 18px;
 }
 
 .content_form{
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 
+}
+#task-name, #task-desc, #deadline, #reason{
+    border: none;
+    background-color: #f3f2f2;
+    height: 35px;
+    border-radius: 5px;
+}
+.title_form{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button{
+    border: none;
+    background-color: #f3f2f2;
+    height: 25px;
+    border-radius: 5px;
+    margin-top: 5px;
+    color: #96a8de;
+    font-size: 16px;
+
+}
+.form_button{
+    border: none;
+    background-color: #f3f2f2;
+    height: 35px;
+    border-radius: 5px;
+    margin-top: 5px;
+    color: #96a8de;
+    font-size: 16px;
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 5px
+}
+
+.arrow_button{
+    width: 25px;
 }
