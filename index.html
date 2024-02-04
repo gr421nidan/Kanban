@@ -38,20 +38,22 @@
                         <h3>{{ task.title }}</h3>
                         <span>{{task.description}}</span>
                     </div>
+                    <div v-if="task.editedData">Отредактировано: {{task.editedData}}</div>
+                        <div v-if="task.edited">
+                            <label>Измените описание:</label><br>
+                            <textarea class="edited-desc" v-model="editedDescription"></textarea><br>
+                            <label>Измените срок сдачи:</label>
+                            <input type="date" v-model="editedDeadline" class="edited-deadline" min="2024-01-01" max="2025-12-31"/><br>
+                            <button v-on:click="saveEditedTask(task,editedDescription, editedDeadline)">Сохранить</button>
+                        </div>
                     <div class="buttons">
-                        <button v-on:click="removeTask(task)" class="btn">Удалить</button>
-                        <button  v-on:click="editedTasks(task)">Редактировать</button>
+                        <button v-on:click="removeTask(task)">Удалить</button>
+                        <button  v-on:click="editTasks(task)">Редактировать</button>
                         <button class="arrow_button"  v-on:click="moveFromPlanTask(task)"><i class="arrow right"></i></button>
                     </div>
 
                 </div>
-            <div class="modal" v-if="editedTaskModal">
-                <h3>Редактирование задачи</h3>
-                <input type="text" v-model="editedTaskName" required>
-                <textarea v-model="editedDescription" required></textarea>
-                <input type="date" v-model="editedDeadline" required>
-                <button @click="saveEditedTask">Сохранить</button>
-            </div>
+
 
         </div>
         <div class="column">
@@ -63,13 +65,21 @@
                     <h3>{{ task.title }}</h3>
                     <span>{{task.description}}</span>
                 </div>
+                <div v-if="task.editedData">Отредактировано: {{task.editedData}}</div>
+                <div v-if="task.edited">
+                    <label>Измените описание:</label><br>
+                    <textarea class="edited-desc" v-model="editedDescription"></textarea><br>
+                    <label>Измените срок сдачи:</label>
+                    <input type="date" v-model="editedDeadline" class="edited-deadline" min="2024-01-01" max="2025-12-31"/><br>
+                    <button v-on:click="saveEditedTask(task,editedDescription)">Сохранить</button>
+                </div>
                 <div v-if="task.reason!==''">
                     <span>Причина возврата:</span>
                     {{task.reason}}
                 </div>
 
                 <div class="buttons">
-                    <button  v-on:click="editedTasks(task)">Редактировать</button>
+                    <button  v-on:click="editTasks(task)">Редактировать</button>
                     <button class="arrow_button" v-on:click="moveFromWorkTask(task)"><i class="arrow right"></i></button>
                 </div>
 
@@ -85,8 +95,16 @@
                     <h3>{{ task.title }}</h3>
                     <span>{{task.description}}</span>
                 </div>
+                <div v-if="task.editedData">Отредактировано: {{task.editedData}}</div>
+                <div v-if="task.edited">
+                    <label>Измените описание:</label><br>
+                    <textarea class="edited-desc" v-model="editedDescription"></textarea><br>
+                    <label>Измените срок сдачи:</label>
+                    <input type="date" v-model="editedDeadline" class="edited-deadline" min="2024-01-01" max="2025-12-31"/><br>
+                    <button v-on:click="saveEditedTask(task,editedDescription)">Сохранить</button>
+                </div>
                 <div class="buttons">
-                    <button v-on:click="editedTasks(task)">Редактировать</button>
+                    <button v-on:click="editTasks(task)">Редактировать</button>
                     <button class="arrow_button" v-on:click="moveFromTestingTaskBack(task)" :disabled="task.reason === ''" ><i class="arrow left"></i></button>
                     <button class="arrow_button" v-on:click="moveFromTestingTask(task)"><i class="arrow right"></i></button><br>
                 </div>
@@ -104,8 +122,7 @@
                     <h3>{{ task.title }}</h3>
                     <span>{{task.description}}</span>
                 </div>
-
-
+                <div v-if="task.editedData">Отредактировано: {{task.editedData}}</div>
                 <p>{{task.check}}</p>
             </div>
         </div>

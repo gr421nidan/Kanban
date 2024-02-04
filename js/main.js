@@ -12,12 +12,10 @@ new Vue({
             deadline: '',
             reason: '',
             check: '',
-            dateCompleted: new Date().toLocaleDateString(),
-            editedTaskName: '',
-            editedDescription: '',
-            editedDeadline: '',
-            editedTaskModal: false,
-            editedTask:{}
+
+            edited: false,
+            editedDescription:'',
+            editedDeadline: ''
         };
     },
     methods: {
@@ -31,6 +29,7 @@ new Vue({
                     deadline: this.deadline,
                     reason: this.reason,
                     check: this.check,
+                    edited: false,
                 };
                 if (this.taskName !== '') {
                     newTask.createdDate = new Date().toLocaleDateString();
@@ -46,20 +45,20 @@ new Vue({
             this.planTask.splice(this.planTask.indexOf(task), 1)
 
         },
-        editedTasks(task) {
-            this.editedTaskModal = true;
-            this.editedTask = task;
-            this.editedTaskName = task.title;
-            this.editedDescription = task.description;
-            this.editedDeadline = task.deadline;
+        editTasks(task) {
+            task.edited = true;
+
 
         },
-        saveEditedTask(newTask) {
-            const index = newTask.indexOf(this.editedTask);
-            newTask[index].title = this.editedTaskName;
-            newTask[index].description = this.editedDescription;
-            newTask[index].deadline = this.editedDeadline;
-            this.editedTaskModal = false;
+
+        saveEditedTask(task,text,date){
+            task.edited = false
+            task.description=text
+            task.deadline=date
+            task.editedData =new Date().toLocaleString()
+            this.editedDeadline=''
+            this.editedDescription=''
+
         },
 
         moveFromPlanTask(task){
@@ -74,7 +73,9 @@ new Vue({
             this.reason=''
             this.testingTask.splice(this.testingTask.indexOf(task), 1)
             this.completedTask.push(task)
-            if (task.deadline >= task.createdDate){
+            let dateNow= new Date().getTime();
+            let dateCompleted=new Date(task.deadline).getTime()
+            if (dateCompleted >=dateNow){
                 task.check = 'Выполнено в срок'
             }else {
                 task.check = 'Просроченно'
